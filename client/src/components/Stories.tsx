@@ -3,9 +3,13 @@ import { dummyStoriesData } from "../assets/assets";
 import { Plus } from "lucide-react";
 import type { Story } from "../interfaces";
 import moment from "moment";
+import StoryPanel from "./StoryPanel";
+import StoryViewer from "./StoryViewer";
 
 const Stories = () => {
   const [stories, setStories] = useState<Story[]>([]);
+  const [showStoryPanel, setShowStoryPanel] = useState(false);
+  const [viewStory, setViewStory] = useState(null);
 
   const fetchStories = async () => {
     setStories(dummyStoriesData);
@@ -19,7 +23,10 @@ const Stories = () => {
     <div className="w-screen sm:w-[calc(100vw-240px)] lg:max-w-2xl no-scrollbar overflow-x-auto px-4">
       <div className="flex gap-4 pb-5">
         {/* Add Story */}
-        <div className="rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-amber-400 bg-gradient-to-b from-amber-100 to-white">
+        <div
+          onClick={() => setShowStoryPanel(true)}
+          className="rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-amber-400 bg-gradient-to-b from-amber-100 to-white"
+        >
           <div className="h-full flex flex-col items-center justify-center p-4">
             <div className="size-10 bg-yellow-500 rounded-full flex items-center justify-center mb-3">
               <Plus className="w-5 h-5 text-white" />
@@ -29,9 +36,10 @@ const Stories = () => {
             </p>
           </div>
         </div>
-        {/* Stories */}
+        {/* Story cards */}
         {stories.map((story, index) => (
           <div
+            onClick={() => setViewStory(story)}
             key={index}
             className={`relative rounded-lg shadow min-w-30 max-w-30 max-h-40 cursor-pointer hover:shadow-lg transition-all duration-200 bg-gradient-to-b from-amber-300 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 active:scale-95`}
           >
@@ -65,6 +73,16 @@ const Stories = () => {
           </div>
         ))}
       </div>
+      {/* Add Story Viewer*/}
+      {showStoryPanel && (
+        <StoryPanel
+          setShowStoryPanel={setShowStoryPanel}
+          fetchStories={fetchStories}
+        />
+      )}
+      {viewStory && (
+        <StoryViewer viewStory={viewStory} setViewStory={setViewStory} />
+      )}
     </div>
   );
 };

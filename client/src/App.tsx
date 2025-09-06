@@ -7,12 +7,14 @@ import Friends from "./pages/friends";
 import Profile from "./pages/Profile";
 import MakePost from "./pages/MakePost";
 import { useUser } from "@clerk/clerk-react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const user = useUser();
 
   return (
     <>
+      <Toaster />
       <Routes>
         // Default route to login page if there is not user, otherwise go to
         layout
