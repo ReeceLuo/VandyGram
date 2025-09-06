@@ -35,7 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <img
           src={assets.logo}
           alt=""
-          className="w-26 ml-7 my-2 cursor-pointer"
+          className="w-35 ml-7 mt-3 my-2 cursor-pointer"
           onClick={() => navigate("/")}
         />
         <hr className="border-gray-300 mb-8" />
@@ -43,7 +43,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <Menu setSidebarOpen={setSidebarOpen} />
         <Link
           to="/create-post"
-          className="flex items-center justify-center gap-2 py-2.5 mt-6 mx-6 rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 active:scale-95 transition text-white cursor-pointer"
+          className="flex items-center justify-center gap-2 py-2.5 mt-6 mx-6 rounded-lg bg-gradient-to-r from-amber-300 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 active:scale-95 transition text-white cursor-pointer"
         >
           <CirclePlus className="w-5 h-5" />
           Create Post
