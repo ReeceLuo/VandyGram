@@ -9,7 +9,7 @@ import StoryViewer from "./StoryViewer";
 const Stories = () => {
   const [stories, setStories] = useState<Story[]>([]);
   const [showStoryPanel, setShowStoryPanel] = useState(false);
-  const [viewStory, setViewStory] = useState(null);
+  const [currStory, setCurrStory] = useState(null);
 
   const fetchStories = async () => {
     setStories(dummyStoriesData);
@@ -39,7 +39,7 @@ const Stories = () => {
         {/* Story cards */}
         {stories.map((story, index) => (
           <div
-            onClick={() => setViewStory(story)}
+            onClick={() => setCurrStory(story)}
             key={index}
             className={`relative rounded-lg shadow min-w-30 max-w-30 max-h-40 cursor-pointer hover:shadow-lg transition-all duration-200 bg-gradient-to-b from-amber-300 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 active:scale-95`}
           >
@@ -74,14 +74,15 @@ const Stories = () => {
         ))}
       </div>
       {/* Add Story Viewer*/}
+      {/* Shows if showStoryPanel = True, which is set when card is clicked */}
       {showStoryPanel && (
         <StoryPanel
           setShowStoryPanel={setShowStoryPanel}
           fetchStories={fetchStories}
         />
       )}
-      {viewStory && (
-        <StoryViewer viewStory={viewStory} setViewStory={setViewStory} />
+      {currStory && (
+        <StoryViewer currStory={currStory} setCurrStory={setCurrStory} />
       )}
     </div>
   );
