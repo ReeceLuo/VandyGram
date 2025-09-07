@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Layout from "./pages/Layout";
 import Feed from "./pages/Feed";
-import Friends from "./pages/friends";
+import Friends from "./pages/Friends";
 import Profile from "./pages/Profile";
 import MakePost from "./pages/MakePost";
 import { useUser } from "@clerk/clerk-react";

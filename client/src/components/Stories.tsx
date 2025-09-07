@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { dummyStoriesData } from "../assets/assets";
 import { Plus } from "lucide-react";
-import type { Story } from "../interfaces";
+import type { StoryProps } from "../interfaces";
 import moment from "moment";
-import StoryPanel from "./StoryPanel";
+import StoryCreator from "./StoryCreator";
 import StoryViewer from "./StoryViewer";
 
 const Stories = () => {
-  const [stories, setStories] = useState<Story[]>([]);
-  const [showStoryPanel, setShowStoryPanel] = useState(false);
-  const [currStory, setCurrStory] = useState(null);
+  const [stories, setStories] = useState<StoryProps[]>([]);
+  const [showStoryCreator, setShowStoryCreator] = useState(false);
+  const [currStory, setCurrStory] = useState<StoryProps | null>(null);
 
   const fetchStories = async () => {
     setStories(dummyStoriesData);
@@ -24,7 +24,7 @@ const Stories = () => {
       <div className="flex gap-4 pb-5">
         {/* Add Story */}
         <div
-          onClick={() => setShowStoryPanel(true)}
+          onClick={() => setShowStoryCreator(true)}
           className="rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-amber-400 bg-gradient-to-b from-amber-100 to-white"
         >
           <div className="h-full flex flex-col items-center justify-center p-4">
@@ -74,10 +74,10 @@ const Stories = () => {
         ))}
       </div>
       {/* Add Story Viewer*/}
-      {/* Shows if showStoryPanel = True, which is set when card is clicked */}
-      {showStoryPanel && (
-        <StoryPanel
-          setShowStoryPanel={setShowStoryPanel}
+      {/* Shows if showStoryCreator = True, which is set when create story card is clicked */}
+      {showStoryCreator && (
+        <StoryCreator
+          setShowStoryCreator={setShowStoryCreator}
           fetchStories={fetchStories}
         />
       )}

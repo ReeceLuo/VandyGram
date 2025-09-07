@@ -2,12 +2,15 @@ import { ArrowLeft, Sparkle, TextIcon, Upload } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-interface StoryPanelProps {
-  setShowStoryPanel: (show: boolean) => void;
+interface StoryCreatorProps {
+  setShowStoryCreator: (show: boolean) => void;
   fetchStories: () => void;
 }
 
-const StoryPanel = ({ setShowStoryPanel, fetchStories }: StoryPanelProps) => {
+const StoryCreator = ({
+  setShowStoryCreator,
+  fetchStories,
+}: StoryCreatorProps) => {
   const backgroundColors = [
     "#4f46e5",
     "#7c3aed",
@@ -40,7 +43,7 @@ const StoryPanel = ({ setShowStoryPanel, fetchStories }: StoryPanelProps) => {
         <div className="text-center mb-4 flex items-center justify-between">
           <button
             className="text-white p-2 cursor-pointer"
-            onClick={() => setShowStoryPanel(false)}
+            onClick={() => setShowStoryCreator(false)}
           >
             <ArrowLeft />
           </button>
@@ -130,4 +133,4 @@ const StoryPanel = ({ setShowStoryPanel, fetchStories }: StoryPanelProps) => {
   );
 };
 
-export default StoryPanel;
+export default StoryCreator;

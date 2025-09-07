@@ -1,4 +1,4 @@
-export interface Story {
+export interface StoryProps {
   _id: string;
   user: {
     _id: string;
@@ -12,7 +12,7 @@ export interface Story {
     followers: string[];
     following: string[];
     connections: string[];
-    // posts: [];
+    posts: any[];
     is_verified: boolean;
     createdAt: string;
     updatedAt: string;

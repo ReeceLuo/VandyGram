@@ -1,7 +1,43 @@
 import { BadgeCheck, X } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import type { StoryProps } from "../interfaces";
 
-const StoryViewer = ({ currStory, setCurrStory }) => {
+interface StoryViewerProps {
+  currStory: StoryProps | null;
+  setCurrStory: React.Dispatch<React.SetStateAction<StoryProps | null>>;
+}
+
+const StoryViewer = ({ currStory, setCurrStory }: StoryViewerProps) => {
+  //   Progress bar state and setter
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let timer: number | undefined, progressInterval: number | undefined;
+    // Only use progress bar and timer if text or image, NOT video
+    if (currStory && currStory.media_type !== "video") {
+      setProgress(0);
+      const duration = 10000;
+      const setTime = 100;
+      let elapsed = 0;
+
+      progressInterval = setInterval(() => {
+        elapsed += setTime;
+        setProgress((elapsed / duration) * 100);
+      }, setTime);
+
+      timer = setTimeout(() => {
+        setCurrStory(null);
+      }, duration);
+    }
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressInterval);
+    };
+  }, [currStory, setCurrStory]); // only runs when story changes
+
+  if (!currStory) return null;
+
   //   Closing out of story viewer
   const handleClose = () => {
     setCurrStory(null);
@@ -30,6 +66,8 @@ const StoryViewer = ({ currStory, setCurrStory }) => {
             onEnded={() => setCurrStory(null)} // when video ends, state set to no story
             src={currStory.media_url}
             className="max-w-full max-h-screen object-contain"
+            controls
+            autoPlay
           />
         );
       default:
@@ -51,7 +89,7 @@ const StoryViewer = ({ currStory, setCurrStory }) => {
       <div className="absolute top-0 left-0 w-full h-1 bg-gray-700">
         <div
           className="h-full bg-white transition-all duration-100 linear"
-          style={{ width: "50" }}
+          style={{ width: `${progress}%` }}
         ></div>
       </div>
       {/* User Info (top-left) */}
