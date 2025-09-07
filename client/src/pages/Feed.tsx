@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { dummyPostsData } from "../assets/assets";
+import { assets, dummyPostsData } from "../assets/assets";
 import Loading from "../components/Loading";
 import Stories from "../components/Stories";
 import PostCard from "../components/PostCard";
+import RecentActivity from "../components/RecentActivity";
+import Sponsored from "../components/Sponsored";
 
 const Feed = () => {
   const [feed, setFeed] = useState([]);
@@ -29,11 +31,9 @@ const Feed = () => {
         </div>
       </div>
       {/* Right sidebar */}
-      <div>
-        <div>
-          <h1>Sponsored</h1>
-        </div>
-        <h1>Recent messages</h1>
+      <div className="max-x1:hidden sticky top-0">
+        <Sponsored />
+        <RecentActivity />
       </div>
     </div>
   ) : (

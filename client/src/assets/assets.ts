@@ -4,7 +4,7 @@ import sample_profile from './sample_profile.jpg'
 import bgImage from './background.png'
 import group_users from './group_users.png'
 import { Home, MessageCircle, Search, UserIcon, Users } from 'lucide-react'
-import sponsored_img from './sponsored_img.png'
+import sponsored_img from './sponsored_img.jpg'
 
 export const assets = {
     logo,
@@ -190,6 +190,44 @@ export const dummyPostsData = [
         "createdAt": "2025-07-09T09:27:47.529Z",
         "updatedAt": "2025-07-09T09:27:47.529Z",
     }
+]
+
+export const dummyRecentActivityData = [
+    {
+        "_id": "68833af618623d2de81b5381",
+        "from_user_id": dummyUser2Data,
+        "activity_type": "like",
+        "createdAt": "2025-07-25T08:06:14.436Z",
+        "updatedAt": "2025-07-25T08:47:47.768Z",
+    },
+    {
+        "_id": "6878cc3c17a54e4d3748012f",
+        "from_user_id": dummyUserData,
+        "activity_type": "comment",
+        "createdAt": "2025-07-17T10:11:08.437Z",
+        "updatedAt": "2025-07-25T08:07:11.893Z",
+    },
+    {
+        "_id": "686fb66c7f0dcbff63b239e7",
+        "from_user_id": dummyUser3Data,
+        "activity_type": "like",
+        "createdAt": "2025-07-10T12:47:40.510Z",
+        "updatedAt": "2025-07-10T12:47:40.510Z",
+    },
+    {
+        "_id": "68835ffc6e4b42b685069def",
+        "from_user_id": dummyUserData,
+        "activity_type": "like",
+        "createdAt": "2025-07-25T10:44:12.753Z",
+        "updatedAt": "2025-07-25T10:44:12.753Z",
+    },
+        {
+        "_id": "6878cc2817a54e4d3748010c",
+        "from_user_id": dummyUser3Data,
+        "activity_type": "follow",
+        "createdAt": "2025-08-17T10:10:48.956Z",
+        "updatedAt": "2025-08-25T10:43:50.346Z",
+    },
 ]
 
 export const dummyRecentMessagesData = [
