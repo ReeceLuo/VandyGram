@@ -32,7 +32,7 @@ const Friends = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Friends</h1>
           <p className="text-slate-600">
-            Manage your network and discover new connections
+            Manage your network and connect with other Commodores
           </p>
         </div>
         {/* Counts */}
@@ -103,6 +103,11 @@ const Friends = () => {
                       </button>
                     )}
                     {currTab === "Pending" && (
+                      <button className="w-full p-2 text-sm rounded- bg-slate-100 hover:bg-slate-200 text-black active:scale-95 transition cursor-pointer">
+                        Accept
+                      </button>
+                    )}
+                    {currTab === "Friends" && (
                       <button className="w-full p-2 text-sm rounded- bg-slate-100 hover:bg-slate-200 text-black active:scale-95 transition cursor-pointer">
                         Accept
                       </button>

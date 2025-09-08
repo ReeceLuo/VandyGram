@@ -21,7 +21,7 @@ export const menuItemsData = [
     { to: '/', label: 'Feed', Icon: Home },
     // { to: '/messages', label: 'Messages', Icon: MessageCircle },
     { to: '/friends', label: 'Friends', Icon: Users },
-    // { to: '/discover', label: 'Discover', Icon: Search },
+    { to: '/discover', label: 'Discover', Icon: Search },
     { to: '/profile', label: 'Profile', Icon: UserIcon },
 ];
 
