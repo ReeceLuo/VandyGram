@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { assets, dummyPostsData } from "../assets/assets";
+import { assets, dummyPostsData, sponsoredLink } from "../assets/assets";
 import Loading from "../components/Loading";
 import Stories from "../components/Stories";
 import PostCard from "../components/PostCard";
@@ -32,7 +32,7 @@ const Feed = () => {
       </div>
       {/* Right sidebar */}
       <div className="max-x1:hidden sticky top-0">
-        <Sponsored />
+        <Sponsored sponsoredLink={sponsoredLink} />
         <RecentActivity />
       </div>
     </div>

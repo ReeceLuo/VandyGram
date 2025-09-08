@@ -15,6 +15,8 @@ export const assets = {
     sponsored_img
 }
 
+export const sponsoredLink = "https://vucommodores.evenue.net/list/FB"
+
 export const menuItemsData = [
     { to: '/', label: 'Feed', Icon: Home },
     // { to: '/messages', label: 'Messages', Icon: MessageCircle },
@@ -64,7 +66,7 @@ export const dummyStoriesData = [
         "content": "📌 This isn't the story I wanted to tell… not yet. But if you're reading this, know that something interesting is in motion 🔄. The next post will make more sense 🧩.",
         "media_url": "",
         "media_type": "text",
-        "background_color": "#4f46e5",
+        "background_color": "#edb53cff",
         "createdAt": "2025-09-06T08:16:06.958Z",
         "updatedAt": "2025-09-06T08:16:06.958Z",
     },
@@ -74,7 +76,7 @@ export const dummyStoriesData = [
         "content": "",
         "media_url": "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg",
         "media_type": "image",
-        "background_color": "#4f46e5",
+        "background_color": "#edb53cff",
         "createdAt": "2025-09-01T08:27:48.134Z",
         "updatedAt": "2025-09-01T08:27:48.134Z",
     },
@@ -84,7 +86,7 @@ export const dummyStoriesData = [
         "content": "",
         "media_url": "https://videos.pexels.com/video-files/14447442/14447442-hd_1080_1920_30fps.mp4",
         "media_type": "video",
-        "background_color": "#4f46e5",
+        "background_color": "#edb53cff",
         "createdAt": "2025-08-25T08:27:21.289Z",
         "updatedAt": "2025-08-25T08:27:21.289Z",
     },
@@ -94,7 +96,7 @@ export const dummyStoriesData = [
         "content": "",
         "media_url": "https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg",
         "media_type": "image",
-        "background_color": "#4f46e5",
+        "background_color": "#edb53cff",
         "createdAt": "2025-08-25T08:19:31.080Z",
         "updatedAt": "2025-08-25T08:19:31.080Z",
     },
@@ -104,7 +106,7 @@ export const dummyStoriesData = [
         "content": "🤫 Not every moment needs to be loud. Sometimes, the best things happen in silence — in drafts 📝, in progress 🧪, in planning 📊. That's where I am right now.",
         "media_url": "",
         "media_type": "text",
-        "background_color": "#4f46e5",
+        "background_color": "#edb53cff",
         "createdAt": "2025-08-25T08:16:48.617Z",
         "updatedAt": "2025-08-25T08:16:48.617Z",
     },
@@ -114,7 +116,7 @@ export const dummyStoriesData = [
         "content": "✨ Something meaningful is on the way. I'm working behind the scenes 🛠️ to bring it all together. This space is just the beginning 🌱. Stay tuned 👀.",
         "media_url": "",
         "media_type": "text",
-        "background_color": "#4f46e5",
+        "background_color": "#edb53cff",
         "createdAt": "2025-07-25T08:13:18.111Z",
         "updatedAt": "2025-07-25T08:13:18.111Z",
     }

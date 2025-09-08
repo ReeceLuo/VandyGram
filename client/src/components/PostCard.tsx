@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { dummyUserData } from "../assets/assets";
 import type { PostProps } from "../interfaces";
 
-const PostCard = ({ post }: PostProp) => {
+const PostCard = ({ post }: { post: PostProps }) => {
   // Edits post with hashtags
   const postWithHashtags = post.content.replace(
     /(#\w+)/g,
@@ -14,7 +14,7 @@ const PostCard = ({ post }: PostProp) => {
   const [numLikes, setNumLikes] = useState(post.likes_count);
   const currUser = dummyUserData;
 
-  const handleLike = async (params: type) => {};
+  const handleLike = async () => {};
   return (
     <div className="bg-white rounded-x1 shadow p-4 space-y-4 w-full max-w-2xl">
       {/* User info */}

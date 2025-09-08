@@ -23,11 +23,12 @@ const StoryCreator = ({
   const [mode, setMode] = useState("text"); // Used to set either text or media
   const [background, setBackground] = useState(backgroundColors[4]);
   const [text, setText] = useState("");
-  const [media, setMedia] = useState(null);
-  const [previewURL, setPreviewURL] = useState(null);
+  const [media, setMedia] = useState<File | null>(null);
+  const [previewURL, setPreviewURL] = useState<string | null>(null);
 
-  const handleMediaUpload = (e) => {
-    const file = e.target.files[0];
+  const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    const file = files && files[0];
     if (file) {
       setMedia(file);
       setPreviewURL(URL.createObjectURL(file));
