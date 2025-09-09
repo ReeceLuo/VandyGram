@@ -47,6 +47,14 @@ const UserCard = ({ user, key }: { user: UserProps; key: string }) => {
           <UserPlus className="w-4 h-4" />{" "}
           {currUser?.following.includes(user._id) ? "Following" : "Follow"}
         </button>
+        {/* Friend request button */}
+        <button className="flex items-center text-sm justify-center w-40 border text-slate-500 group rounded-md cursor-pointer active:scale-95 transition">
+          {currUser?.connections.includes(user._id) ? (
+            <p>Friended</p>
+          ) : (
+            <p className="h-5 hover:scale-105">Add Friend</p>
+          )}
+        </button>
       </div>
     </div>
   );
