@@ -6,7 +6,7 @@ import Feed from "./pages/Feed";
 import Friends from "./pages/Friends";
 import Discover from "./pages/Discover";
 import Profile from "./pages/Profile";
-import MakePost from "./pages/MakePost";
+import CreatePost from "./pages/CreatePost";
 import { useUser } from "@clerk/clerk-react";
 import { Toaster } from "react-hot-toast";
 
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="friends" element={<Friends />} />
           <Route path="discover" element={<Discover />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="make-post" element={<MakePost />} />
+          <Route path="create-post" element={<CreatePost />} />
         </Route>
       </Routes>
     </>
