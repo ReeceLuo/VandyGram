@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import UserProfileInfo from "../components/UserProfileInfo";
 import PostCard from "../components/PostCard";
 import moment from "moment";
+import ProfileEditor from "../components/ProfileEditor";
 
 const Profile = () => {
   // useParams() - React router hook that lets you read dynamic URL parameters
@@ -103,7 +104,7 @@ const Profile = () => {
         </div>
       </div>
       {/* Edit profile page */}
-      {showEdit && <p>Show profile edit page</p>}
+      {showEdit && <ProfileEditor setShowEdit={setShowEdit} />}
     </div>
   ) : (
     <Loading />
