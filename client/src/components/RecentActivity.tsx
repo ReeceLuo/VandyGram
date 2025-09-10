@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { dummyRecentActivityData } from "../assets/assets";
 import moment from "moment";
-import type { ActionProps } from "../interfaces";
+import type { RecentActivityProps } from "../interfaces";
 
 const RecentActivity = () => {
-  const [activity, setActivity] = useState([]);
+  const [activity, setActivity] = useState<RecentActivityProps[]>([]);
   const [seen, setSeen] = useState(false);
 
   const fetchRecentActivity = async () => {
@@ -19,7 +19,7 @@ const RecentActivity = () => {
   }, []);
 
   // Displays text depending on which interaction
-  const actionDescription = (action: ActionProps) => {
+  const actionDescription = (action: RecentActivityProps) => {
     switch (action.activity_type) {
       case "like":
         return <p>liked your post.</p>;
@@ -42,13 +42,13 @@ const RecentActivity = () => {
           className="flex items-start gap-2 py-2 hover:bg-slate-100"
         >
           <img
-            src={action.from_user_id.profile_picture}
+            src={action.from_user.profile_picture}
             alt=""
             className="w-8 h-8 rounded-full"
           />
           <div className="w-full">
             <div className="flex justify-between">
-              <p className="font-medium">{action.from_user_id.username}</p>
+              <p className="font-medium">{action.from_user.username}</p>
               <p className="text-[10px] text-slate-400">
                 {moment(action.createdAt).fromNow()}
               </p>

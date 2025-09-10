@@ -1,6 +1,6 @@
 import { BadgeCheck, Heart, MessageCircle } from "lucide-react";
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import { dummyUserData } from "../assets/assets";
 import type { PostProps } from "../interfaces";
 

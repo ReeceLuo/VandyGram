@@ -1,11 +1,3 @@
-export interface ActionProps {
-  _id: string;
-  from_user_id: UserProps;
-  activity_type: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface PostProps {
   _id: string;
   user: UserProps;
@@ -13,8 +5,16 @@ export interface PostProps {
   image_urls: string[];
   post_type: string;
   likes_count: string[];
-  createdAt: string[];
-  updatedAt: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RecentActivityProps {
+  _id: string;
+  from_user: UserProps;
+  activity_type: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface StoryProps {
@@ -42,6 +42,7 @@ export interface UserProps {
   connections: string[];
   posts: any[];
   is_verified: boolean;
+  grad_year: number;
   createdAt: string;
   updatedAt: string;
 }

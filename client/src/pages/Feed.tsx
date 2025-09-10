@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { assets, dummyPostsData, sponsoredLink } from "../assets/assets";
+import { useEffect, useState } from "react";
+import { dummyPostsData, sponsoredLink } from "../assets/assets";
 import Loading from "../components/Loading";
 import Stories from "../components/Stories";
 import PostCard from "../components/PostCard";
 import RecentActivity from "../components/RecentActivity";
 import Sponsored from "../components/Sponsored";
+import type { PostProps } from "../interfaces";
 
 const Feed = () => {
-  const [feed, setFeed] = useState([]);
+  const [feed, setFeed] = useState<PostProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchFeed = async () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { dummyPostsData, dummyUserData } from "../assets/assets";
 import Loading from "../components/Loading";
@@ -6,14 +6,15 @@ import UserProfileInfo from "../components/UserProfileInfo";
 import PostCard from "../components/PostCard";
 import moment from "moment";
 import ProfileEditor from "../components/ProfileEditor";
+import type { UserProps, PostProps } from "../interfaces";
 
 const Profile = () => {
   // useParams() - React router hook that lets you read dynamic URL parameters
   const { profileId } = useParams(); // gets profileId from .../profile/profileId
   // if !profileId (there is no profileId), the user is on their own profile page
 
-  const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState<UserProps | null>(null);
+  const [posts, setPosts] = useState<PostProps[]>([]);
   const [activeTab, setActiveTab] = useState("posts"); // state for tab currently being displayed
   const [showEdit, setShowEdit] = useState(false);
 

@@ -2,9 +2,23 @@ import React, { useState } from "react";
 import { dummyUserData } from "../assets/assets";
 import { Pencil } from "lucide-react";
 
-const ProfileEditor = ({ setShowEdit }) => {
+interface EditForm {
+  username: string;
+  bio: string;
+  location: string;
+  profile_picture: File | null;
+  cover_photo: File | null;
+  full_name: string;
+  grad_year: string | number;
+}
+
+const ProfileEditor = ({
+  setShowEdit,
+}: {
+  setShowEdit: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const user = dummyUserData;
-  const [editForm, setEditForm] = useState({
+  const [editForm, setEditForm] = useState<EditForm>({
     username: user.username,
     bio: user.bio,
     location: user.location,
@@ -38,7 +52,7 @@ const ProfileEditor = ({ setShowEdit }) => {
                   onChange={(e) =>
                     setEditForm({
                       ...editForm, // ... (spread operator) copies all existing values from editForm
-                      profile_picture: e.target.files[0],
+                      profile_picture: e.target.files?.[0] || null,
                     })
                   }
                   type="file"
@@ -75,7 +89,7 @@ const ProfileEditor = ({ setShowEdit }) => {
                     onChange={(e) =>
                       setEditForm({
                         ...editForm, // ... (spread operator) copies all existing values from editForm
-                        cover_photo: e.target.files[0],
+                        cover_photo: e.target.files?.[0] || null,
                       })
                     }
                     type="file"
@@ -123,7 +137,10 @@ const ProfileEditor = ({ setShowEdit }) => {
                     className="w-full p-3 border border-gray-200 rounded-lg"
                     placeholder="Ex: 2028"
                     onChange={(e) =>
-                      setEditForm({ ...editForm, grad_year: e.target.value })
+                      setEditForm({
+                        ...editForm,
+                        grad_year: e.target.value,
+                      })
                     }
                     value={editForm.grad_year}
                   />

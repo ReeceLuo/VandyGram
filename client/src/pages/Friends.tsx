@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Users,
   UserPlus,
   UserCheck,
   UserRoundPen,
-  MessageSquare,
+  type LucideIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,12 +13,19 @@ import {
   dummyFollowingData as following,
   dummyPendingConnectionsData as pendingConnections,
 } from "../assets/assets";
+import type { UserProps } from "../interfaces";
+
+interface TabProps {
+  label: string;
+  value: UserProps[];
+  icon: LucideIcon;
+}
 
 const Friends = () => {
   const [currTab, setCurrTab] = useState("Followers");
 
   const navigate = useNavigate();
-  const dataArray = [
+  const dataArray: TabProps[] = [
     { label: "Followers", value: followers, icon: Users },
     { label: "Following", value: following, icon: UserCheck },
     { label: "Pending", value: pendingConnections, icon: UserRoundPen },
@@ -61,9 +68,9 @@ const Friends = () => {
             >
               <tab.icon className="w-4 h-4" />
               <span className="ml-1">{tab.label}</span>
-              {tab.count !== undefined && (
+              {tab.value.length !== undefined && (
                 <span className="ml-2 text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">
-                  {tab.count}
+                  {tab.value.length}
                 </span>
               )}
             </button>
@@ -74,7 +81,7 @@ const Friends = () => {
         <div className="flex flex-wrap gap-6 mt-6">
           {dataArray
             .find((item) => item.label === currTab)
-            .value.map((user) => (
+            ?.value.map((user) => (
               <div
                 key={user._id}
                 className="w-full max-w-88 flex gap-5 p-6 bg-white shadow rounded-md"

@@ -1,13 +1,21 @@
-import { Calendar, House, MapPinHouse, PenBox, Verified } from "lucide-react";
+import { Calendar, House, PenBox, Verified } from "lucide-react";
 import React from "react";
-import type { UserProps } from "../interfaces";
+import type { PostProps, UserProps } from "../interfaces";
 import moment from "moment";
 
 interface ProfileInfoProps {
   user: UserProps;
+  posts: PostProps[];
+  profileId: string | undefined; // undefined in case there is no profileId, meaning page on your profile
+  setShowEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserProfileInfo = ({ user, posts, profileId, setShowEdit }) => {
+const UserProfileInfo = ({
+  user,
+  posts,
+  profileId,
+  setShowEdit,
+}: ProfileInfoProps) => {
   return (
     <div className="relative py-4 px-6 md:px-8 bg-white">
       <div className="flex flex-col md:flex-row items-start gap-6">
