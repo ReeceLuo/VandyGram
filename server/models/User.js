@@ -1,3 +1,4 @@
+import { referenceFunction } from "inngest";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -12,9 +13,9 @@ const userSchema = new mongoose.Schema(
     location: { type: String, default: "" },
     year: { type: String, default: "" },
     major: { type: String, default: "" },
-    followers: [{ type: String, reference: "User" }],
-    following: [{ type: String, reference: "User" }],
-    friends: [{ type: String, reference: "User" }],
+    followers: [{ type: String, ref: "User" }],
+    following: [{ type: String, ref: "User" }],
+    friends: [{ type: String, ref: "User" }],
   },
   { timestamps: true, minimize: false }
 );

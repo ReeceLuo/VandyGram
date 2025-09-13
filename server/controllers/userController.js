@@ -6,7 +6,7 @@ import fs from "fs";
 export const getUserData = async (req, res) => {
   try {
     const { userId } = req.auth();
-    const user = await User.findById(userId);
+    const user = await User.findById(userId); // Searches database using User mongoose schema
     if (!user) {
       return res.json({ success: false, message: "User not found" });
     }

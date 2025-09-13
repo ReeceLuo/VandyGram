@@ -6,10 +6,12 @@ import { inngest, functions } from "./inngest/index.js";
 import { serve } from "inngest/express";
 import { clerkMiddleware } from "@clerk/express";
 import userRouter from "./routes/userRoutes.js";
+import mongoose from "mongoose";
 
 const app = express();
 
 await connectDB(); // whenever server starts, it connects to MongoDB database
+// console.log("Mongoose readyState:", mongoose.connection.readyState); // 1 = connected, 0 = disconnected
 
 app.use(express.json());
 app.use(cors());
