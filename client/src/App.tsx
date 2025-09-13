@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Layout from "./pages/Layout";
 import Feed from "./pages/Feed";
@@ -7,12 +7,18 @@ import Friends from "./pages/Friends";
 import Discover from "./pages/Discover";
 import Profile from "./pages/Profile";
 import CreatePost from "./pages/CreatePost";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { user } = useUser();
-  const navigate = useNavigate();
+  const { getToken } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      getToken().then((token) => console.log(token));
+    }
+  }, [user]);
 
   return (
     <>
