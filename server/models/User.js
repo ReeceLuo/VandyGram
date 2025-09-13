@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema(
     profile_picture: { type: String, default: "" },
     cover_photo: { type: String, default: "" },
     location: { type: String, default: "" },
+    year: { type: String, default: "" },
+    major: { type: String, default: "" },
     followers: [{ type: String, reference: "User" }],
     following: [{ type: String, reference: "User" }],
     friends: [{ type: String, reference: "User" }],
