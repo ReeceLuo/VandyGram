@@ -17,6 +17,7 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "imagekit": "^6.0.0",
+    "inn": "^0.0.1",
     "inngest": "^3.40.3",
     "mongoose": "^8.18.1",
     "multer": "^2.0.2"
