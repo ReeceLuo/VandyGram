@@ -1,0 +1,91 @@
+import fs from "fs";
+import imagekit from "../configs/imagekit";
+import Post from "../models/Post";
+import User from "../models/User";
+
+// Add Post
+export const addPost = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const { content, post_type } = req.body;
+    const images = req.files;
+
+    let image_urls = [];
+
+    if (images.length) {
+      image_urls = await Promise.all(
+        images.map(async (image) => {
+          const fileBuffer = fs.readFyleSync(image.path);
+          const response = await imagekit.upload({
+            file: fileBuffer,
+            fileName: image.originalname,
+            folder: "posts",
+          });
+
+          const url = imagekit.url({
+            path: response.filePath,
+            transformation: [
+              { quality: "auto" },
+              { format: "webp" },
+              { width: "1280" },
+            ],
+          });
+          return url;
+        })
+      );
+    }
+    await Post.create({
+      user: userId,
+      content,
+      image_urls,
+      post_type,
+    });
+
+    res.json({ success: true, message: "Post created successfully." });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// Get posts (for feed)
+export const getFeedPosts = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const user = await User.findById(userId);
+
+    // Getes post of user, friends, and following
+    const userIds = [userId, ...user.friends, ...user.following];
+    const posts = await Post.find({ user: { $in: userIds } })
+      .populate("user")
+      .sort({ createdAt: -1 });
+
+    res.json({ success: true, posts });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// Like Post
+export const likePost = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const { postId } = req.body;
+
+    // Check if user has already liked the post
+    // Gives unlike functionality
+    if (post.likes.includes(userId)) {
+      post.likes_count = post.likes_count.filter((user) => user !== userId);
+      await post.save();
+      return res.json({ success: true, message: "Post unliked." });
+    } else {
+      post.likes_count.push(userId);
+      await post.save();
+      return res.json({ success: false, message: "Post liked." });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
