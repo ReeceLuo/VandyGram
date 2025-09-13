@@ -27,7 +27,7 @@ export const addPost = async (req, res) => {
             transformation: [
               { quality: "auto" },
               { format: "webp" },
-              { width: "1280" },
+              { width: "512" },
             ],
           });
           return url;
