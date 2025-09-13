@@ -21,10 +21,10 @@ const syncUserCreation = inngest.createFunction(
     // Check if username is available
     // const existingUser = await User.findOne({ username }); // search for username in MongoDB database
 
-    for (let attempt = 0; attempt < 10 && existingUser; attempt++) {
-      username = username + Math.floor(Math.random() * 10000);
-      existingUser = await User.findOne({ username });
-    }
+    // for (let attempt = 0; attempt < 10 && existingUser; attempt++) {
+    //   username = username + Math.floor(Math.random() * 10000);
+    //   existingUser = await User.findOne({ username });
+    // }
 
     const userData = {
       _id: id,
