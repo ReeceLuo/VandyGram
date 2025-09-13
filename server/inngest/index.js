@@ -13,7 +13,7 @@ const syncUserCreation = inngest.createFunction(
   { event: "clerk/user.created" },
   async ({ event }) => {
     // Ensure MongoDB is connected before queries
-    await connectDB;
+    await connectDB();
 
     const { id, first_name, last_name, email_addresses, image_url } =
       event.data;
