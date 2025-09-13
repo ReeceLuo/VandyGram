@@ -15,7 +15,7 @@ export const addPost = async (req, res) => {
     if (images.length) {
       image_urls = await Promise.all(
         images.map(async (image) => {
-          const fileBuffer = fs.readFyleSync(image.path);
+          const fileBuffer = fs.readFileSync(image.path);
           const response = await imagekit.upload({
             file: fileBuffer,
             fileName: image.originalname,
@@ -72,6 +72,8 @@ export const likePost = async (req, res) => {
   try {
     const { userId } = req.auth();
     const { postId } = req.body;
+
+    const post = await Post.findById(postId);
 
     // Check if user has already liked the post
     // Gives unlike functionality
