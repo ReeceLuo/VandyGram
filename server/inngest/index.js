@@ -12,19 +12,20 @@ const syncUserCreation = inngest.createFunction(
   { id: "sync-user-from-clerk" },
   { event: "clerk/user.created" },
   async ({ event }) => {
-    await connectDB(); // ensure database connection is established
+    await connectDB(); // Ensure DB connection for this handler
+    const User = (await import("../models/User.js")).default; // Import model after connection
 
     const { id, first_name, last_name, email_addresses, image_url } =
       event.data;
     let username = email_addresses[0].email_address.split("@")[0];
 
     // Check if username is available
-    // const existingUser = await User.findOne({ username }); // search for username in MongoDB database
+    const existingUser = await User.findOne({ username }); // search for username in MongoDB database
 
-    // for (let attempt = 0; attempt < 10 && existingUser; attempt++) {
-    //   username = username + Math.floor(Math.random() * 10000);
-    //   existingUser = await User.findOne({ username });
-    // }
+    for (let attempt = 0; attempt < 10 && existingUser; attempt++) {
+      username = username + Math.floor(Math.random() * 10000);
+      existingUser = await User.findOne({ username });
+    }
 
     const userData = {
       _id: id,
@@ -43,7 +44,9 @@ const syncUserUpdate = inngest.createFunction(
   { id: "update-user-from-clerk" },
   { event: "clerk/user.updated" },
   async ({ event }) => {
-    await connectDB(); // ensure database connection is established
+    await connectDB(); // Ensure DB connection for this handler
+    const User = (await import("../models/User.js")).default; // Import model after connection
+
     const { id, first_name, last_name, email_addresses, image_url } =
       event.data;
 
@@ -61,10 +64,11 @@ const syncUserDeletion = inngest.createFunction(
   { id: "delete-user-with-clerk" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
-    await connectDB(); // ensure database connection is established
+    await connectDB(); // Ensure DB connection for this handler
+    const User = (await import("../models/User.js")).default; // Import model after connection
 
     const { id } = event.data;
-    // await User.findByIdAndDelete(id);
+    await User.findByIdAndDelete(id);
   }
 );
 
