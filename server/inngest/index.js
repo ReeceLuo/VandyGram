@@ -1,5 +1,6 @@
 import { Inngest } from "inngest";
 import connectDB from "../configs/db.js";
+import Friend from "../models/Friends.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "my-app" });
@@ -71,5 +72,72 @@ const syncUserDeletion = inngest.createFunction(
   }
 );
 
+// Inngest function to send reminder when new friend request is added
+const sendFriendRequestReminder = inngest.createFunction(
+  { id: "send-new-friend-request-reminder" },
+  { event: "app/friend_request" },
+  async ({ event, step }) => {
+    const { friendId } = event.data;
+    await step.run("send-friend-request-email", async () => {
+      const friend = await Friend.findById(friendId).populate(
+        "from_user_id",
+        "to_user_id"
+      );
+      const subject = "👋 New Friend Request on VandyGram!";
+      const body = `
+      <div style = "font-family: Arial, sans-serif; padding: 20px;">
+      <h2>Hi ${friend.to_user_id.full_name},</h2>
+      <p>You have a new friend request from <strong>${friend.from_user_id.full_name}</strong> on VandyGram!</p>
+      <p>Click <a href="${process.env.FRONTEND_URL}/friends" style = "color:#10b981;">here</a> to accept or decline the request.</p>
+      <br/>
+      <p>Thanks! <br/>VandyGram</p>
+      </div>
+      `;
+
+      await sendEmail({
+        to: friend.to_user_id.email,
+        subject,
+        body,
+      });
+    });
+
+    const in24Hours = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await step.sleepUntil("wait-for-24-hours", in24Hours);
+    await step.run("send-friend-request-reminder", async () => {
+      const friend = await Friend.findById(friendId).populate(
+        "from_user_id to_user_id"
+      );
+
+      if (friend.status === "accepted") {
+        return { message: "Already accepted" };
+      }
+
+      const subject = "👋 New Friend Request on VandyGram!";
+      const body = `
+      <div style = "font-family: Arial, sans-serif; padding: 20px;">
+      <h2>Hi ${friend.to_user_id.full_name},</h2>
+      <p>You have a new friend request from <strong>${friend.from_user_id.full_name}</strong> on VandyGram!</p>
+      <p>Click <a href="${process.env.FRONTEND_URL}/friends" style = "color:#10b981;">here</a> to accept or decline the request.</p>
+      <br/>
+      <p>Thanks! <br/>VandyGram</p>
+      </div>
+      `;
+
+      await sendEmail({
+        to: friend.to_user_id.email,
+        subject,
+        body,
+      });
+
+      return { message: "Reminder sent" };
+    });
+  }
+);
+
 // Create an empty array where we'll export future Inngest functions
-export const functions = [syncUserCreation, syncUserUpdate, syncUserDeletion];
+export const functions = [
+  syncUserCreation,
+  syncUserUpdate,
+  syncUserDeletion,
+  sendFriendRequestReminder,
+];
