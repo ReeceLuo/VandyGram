@@ -10,7 +10,7 @@ export const getUserData = async (req, res) => {
     if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
-    res.json({ success: false, user });
+    res.json({ success: true, user });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -25,10 +25,10 @@ export const updateUserData = async (req, res) => {
 
     const tempUser = await User.findById(userId);
 
-    !username && username == tempUser.username;
+    !username && (username = tempUser.username);
 
     if (tempUser.username !== username) {
-      const user = User.findOne({ username });
+      const user = await User.findOne({ username });
       // do not update username if already taken
       if (user) {
         username = tempUser.username;
@@ -70,7 +70,7 @@ export const updateUserData = async (req, res) => {
       const buffer = fs.readFileSync(cover.path);
       const response = await imagekit.upload({
         file: buffer,
-        fileName: profile.originalname,
+        fileName: cover.originalname,
       });
 
       const url = imagekit.url({
@@ -114,7 +114,7 @@ export const discoverUsers = async (req, res) => {
       ],
     });
 
-    const filterUsers = allUsers.filter((user) => user._id !== userId); // does not return current user
+    const filteredUsers = allUsers.filter((user) => user._id !== userId); // does not return current user
     res.json({ success: true, users: filteredUsers });
   } catch (error) {
     console.log(error);
