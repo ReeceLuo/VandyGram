@@ -42,7 +42,8 @@ export interface UserProps {
   connections: string[];
   posts: any[];
   is_verified: boolean;
-  grad_year: number;
+  year: number;
+  major: string;
   createdAt: string;
   updatedAt: string;
 }

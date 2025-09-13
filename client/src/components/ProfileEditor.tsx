@@ -6,10 +6,11 @@ interface EditForm {
   username: string;
   bio: string;
   location: string;
+  major: string;
   profile_picture: File | null;
   cover_photo: File | null;
   full_name: string;
-  grad_year: string | number;
+  year: string;
 }
 
 const ProfileEditor = ({
@@ -22,10 +23,11 @@ const ProfileEditor = ({
     username: user.username,
     bio: user.bio,
     location: user.location,
+    major: user.major,
     profile_picture: null,
     cover_photo: null,
     full_name: user.full_name,
-    grad_year: user.grad_year,
+    year: user.year,
   });
 
   const handleSaveProfile = async (e) => {
@@ -130,19 +132,19 @@ const ProfileEditor = ({
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Graduation Year
+                    Year
                   </label>
                   <input
                     type="text"
                     className="w-full p-3 border border-gray-200 rounded-lg"
-                    placeholder="Ex: 2028"
+                    placeholder="Ex: Junior"
                     onChange={(e) =>
                       setEditForm({
                         ...editForm,
-                        grad_year: e.target.value,
+                        year: e.target.value,
                       })
                     }
-                    value={editForm.grad_year}
+                    value={editForm.year}
                   />
                 </div>
               </div>
@@ -176,7 +178,7 @@ const ProfileEditor = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700">
                 Bio
               </label>
               <textarea
@@ -187,6 +189,20 @@ const ProfileEditor = ({
                   setEditForm({ ...editForm, bio: e.target.value })
                 }
                 value={editForm.bio}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Major
+              </label>
+              <input
+                type="text"
+                className="w-full p-3 border border-gray-200 rounded-lg"
+                placeholder="Enter a username"
+                onChange={(e) =>
+                  setEditForm({ ...editForm, major: e.target.value })
+                }
+                value={editForm.major}
               />
             </div>
             <div className="flex justify-end space-x-3 pt-6">

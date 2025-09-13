@@ -1,4 +1,11 @@
-import { Calendar, House, PenBox, Verified } from "lucide-react";
+import {
+  BookText,
+  Calendar,
+  GraduationCap,
+  House,
+  PenBox,
+  Verified,
+} from "lucide-react";
 import React from "react";
 import type { PostProps, UserProps } from "../interfaces";
 import moment from "moment";
@@ -38,6 +45,7 @@ const UserProfileInfo = ({
               <p className="text-gray-600">
                 {user.username ? `@${user.username}` : "Add a username"}
               </p>
+              <p className="text-sm text-gray-400 mt-1">{user.year}</p>
             </div>
             {/* If user is not on other profile, they are on their profile (!profile) --> display edit button */}
             {!profileId && (
@@ -49,11 +57,15 @@ const UserProfileInfo = ({
               </button>
             )}
           </div>
-          <p className="text-gray-700 text-sm max-w-md mt-4">{user.bio}</p>
+          <p className="text-gray-700 text-sm max-w-md mt-2">{user.bio}</p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-500 mt-4">
             <span className="flex items-center gap-1.5">
               <House className="w-4 h-4" />
               {user.location ? user.location : "Add residential area"}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <BookText className="w-4 h-4" />
+              {user.major ? user.major : "Add major(s)"}
             </span>
             <span className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4" />

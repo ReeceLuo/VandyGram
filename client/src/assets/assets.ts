@@ -39,7 +39,8 @@ export const dummyUserData = {
     "connections": ["user_2", "user_3"],
     "posts": [],
     "is_verified": true,
-    "grad_year": 2028,
+    "year": "Sophomore",
+    "major": "Computer Science",
     "createdAt": "2025-07-09T09:26:59.231Z",
     "updatedAt": "2025-07-21T06:56:50.017Z",
 }

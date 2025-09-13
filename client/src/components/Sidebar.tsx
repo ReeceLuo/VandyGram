@@ -17,8 +17,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const handleSignOut = async () => {
     try {
+      console.log("Starting sign out...");
       await signOut();
-      navigate("/");
+      console.log("Sign out completed");
+      // Navigation will be handled automatically by the App component's useEffect
     } catch (error) {
       console.error("Sign out failed:", error);
     }
