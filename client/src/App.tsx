@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Layout from "./pages/Layout";
 import Feed from "./pages/Feed";
@@ -11,7 +11,8 @@ import { useUser } from "@clerk/clerk-react";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const user = useUser();
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   return (
     <>

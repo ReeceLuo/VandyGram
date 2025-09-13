@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 import { dummyUserData } from "../assets/assets";
