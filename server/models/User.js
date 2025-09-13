@@ -1,4 +1,3 @@
-import { referenceFunction } from "inngest";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(

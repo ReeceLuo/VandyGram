@@ -19,7 +19,7 @@ const syncUserCreation = inngest.createFunction(
     let username = email_addresses[0].email_address.split("@")[0];
 
     // Check if username is available
-    const existingUser = await User.findOne({ username }); // search for username in MongoDB database
+    // const existingUser = await User.findOne({ username }); // search for username in MongoDB database
 
     for (let attempt = 0; attempt < 10 && existingUser; attempt++) {
       username = username + Math.floor(Math.random() * 10000);
@@ -64,7 +64,7 @@ const syncUserDeletion = inngest.createFunction(
     await connectDB(); // ensure database connection is established
 
     const { id } = event.data;
-    await User.findByIdAndDelete(id);
+    // await User.findByIdAndDelete(id);
   }
 );
 
