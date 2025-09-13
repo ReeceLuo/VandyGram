@@ -8,7 +8,7 @@ import { upload } from "../configs/multer.js";
 import { protect } from "../middleware/auth.js";
 
 const postRouter = express.Router();
-postRouter.post("/add", upload.array("images", 4), protect, addPost);
+postRouter.post("/add", upload.array("images", 4), protect, addPost); // Add up to 4 images
 postRouter.get("/feed", protect, getFeedPosts);
 postRouter.post("/like", protect, likePost);
 

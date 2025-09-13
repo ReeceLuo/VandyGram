@@ -5,6 +5,7 @@ import {
   followUser,
   getUserData,
   getUserFriends,
+  getUserProfiles,
   sendFriendRequest,
   unfollowUser,
   updateUserData,
@@ -32,6 +33,8 @@ userRouter.post("/unfollow", protect, unfollowUser);
 // Friend routes
 userRouter.post("/friend", protect, sendFriendRequest);
 userRouter.post("/accept", protect, acceptFriendRequest);
-userRouter.get("/connections", protect, getUserFriends);
+userRouter.get("/friends", protect, getUserFriends);
+
+userRouter.post("/profiles", getUserProfiles);
 
 export default userRouter;
