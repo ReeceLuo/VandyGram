@@ -19,24 +19,19 @@ Media Storage: ImageKit
 Workflows / Background Jobs: Inngest
 
 ## ✨ Features  
-- **Customizable Profile Page**  
-  Users can personalize their profile with profile pictures, bio, and other details.
+- **Customizable Profile Page** - Personalize their profile with profile pictures, bio, and other details.
 
-- **User Authentication**  
-  Secure email-based authentication for account creation and login.  
+- **User Authentication** - Secure email-based auth for account creation and login.  
 
-- **Follow System**  
-  Follow or unfollow other users to personalize your feed.  
+- **Follow System** - Follow or unfollow other users to personalize your feed.  
 
-- **Stories**  
-  Post temporary stories visible for **24 hours** before disappearing.  
+- **Stories** - Post temporary stories visible for **24 hours** before disappearing.  
 
-- **Notifications**  
-  Receive email notifications (with nodemailer) when you get a friend request.  
+- **Notifications** - Receive email notifications (with nodemailer) when you get a friend request.  
 
 
 ## Viewing the program:
-Hosted on Vercel! Click the link and make an account to join the platform. Feel free to contact me if there are any issues with accessing the app!
+Hosted on [Vercel](https://vandy-gram-deployment.vercel.app/)! Click the link and make an account to join the platform. Feel free to contact me if there are any issues with accessing the app!
 
 
 ## 🚀 To run locally
