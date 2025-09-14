@@ -27,7 +27,7 @@ export const addPost = async (req, res) => {
             transformation: [
               { quality: "auto" },
               { format: "webp" },
-              { width: "512" },
+              { width: "1280" },
             ],
           });
           return url;
@@ -77,14 +77,14 @@ export const likePost = async (req, res) => {
 
     // Check if user has already liked the post
     // Gives unlike functionality
-    if (post.likes.includes(userId)) {
+    if (post.likes_count.includes(userId)) {
       post.likes_count = post.likes_count.filter((user) => user !== userId);
       await post.save();
       return res.json({ success: true, message: "Post unliked." });
     } else {
       post.likes_count.push(userId);
       await post.save();
-      return res.json({ success: false, message: "Post liked." });
+      return res.json({ success: true, message: "Post liked." });
     }
   } catch (error) {
     console.log(error);
