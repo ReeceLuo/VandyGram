@@ -11,18 +11,20 @@ import { useUser, useAuth } from "@clerk/clerk-react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./features/user/userSlice.ts";
+import { fetchFriends } from "./features/friends/friendsSlice.ts";
 
 const App = () => {
   const { user } = useUser();
   const { getToken } = useAuth();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch() as any;
 
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
         const token = await getToken();
         dispatch(fetchUser(token));
+        dispatch(fetchFriends(token));
       }
     };
     fetchData();

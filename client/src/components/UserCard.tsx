@@ -1,10 +1,8 @@
-import React from "react";
-import { dummyUserData } from "../assets/assets";
 import type { UserProps } from "../interfaces";
 import { MapPin, UserPlus } from "lucide-react";
 import { useSelector } from "react-redux";
 
-const UserCard = ({ user, key }: { user: UserProps; key: string }) => {
+const UserCard = ({ user }: { user: UserProps }) => {
   const currUser = useSelector((state: any) => state.user.value);
   const handleFollow = async () => {};
 
@@ -51,10 +49,10 @@ const UserCard = ({ user, key }: { user: UserProps; key: string }) => {
         {/* Friend request button */}
         <button
           className={`flex items-center text-sm justify-center w-40 border text-slate-500 group rounded-md cursor-pointer active:scale-95 transition ${
-            currUser?.connections.includes(user._id) ? "" : "hover:bg-gray-100"
+            currUser?.friends.includes(user._id) ? "" : "hover:bg-gray-100"
           }`}
         >
-          {currUser?.connections.includes(user._id) ? (
+          {currUser?.friends.includes(user._id) ? (
             <p>Friended</p>
           ) : (
             <p>Add Friend</p>

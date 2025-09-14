@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Users,
   UserPlus,
@@ -7,13 +7,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import {
-  dummyConnectionsData as friends,
-  dummyFollowersData as followers,
-  dummyFollowingData as following,
-  dummyPendingConnectionsData as pendingConnections,
-} from "../assets/assets";
+import { useSelector, useDispatch } from "react-redux";
 import type { UserProps } from "../interfaces";
+import { useAuth } from "@clerk/clerk-react";
+import { fetchFriends } from "../features/friends/friendsSlice";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 interface TabProps {
   label: string;
@@ -25,12 +24,77 @@ const Friends = () => {
   const [currTab, setCurrTab] = useState("Followers");
 
   const navigate = useNavigate();
+  const { getToken } = useAuth();
+  const dispatch = useDispatch() as any;
+
+  const { friends, pendingFriends, followers, following } = useSelector(
+    (state: any) => state.friends
+  );
+
   const dataArray: TabProps[] = [
     { label: "Followers", value: followers, icon: Users },
     { label: "Following", value: following, icon: UserCheck },
-    { label: "Pending", value: pendingConnections, icon: UserRoundPen },
+    { label: "Pending", value: pendingFriends, icon: UserRoundPen },
     { label: "Friends", value: friends, icon: UserPlus },
   ];
+
+  const handleUnfollow = async (userId: string) => {
+    try {
+      const { data } = await api.post(
+        "api/user/unfollow",
+        { id: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        dispatch(fetchFriends(await getToken()));
+      } else {
+        toast(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
+  };
+
+  const acceptFriend = async (userId: string) => {
+    try {
+      const { data } = await api.post(
+        "api/user/accept",
+        { id: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        dispatch(fetchFriends(await getToken()));
+      } else {
+        toast(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
+  };
+
+  useEffect(() => {
+    getToken().then((token) => {
+      dispatch(fetchFriends(token));
+    });
+  }, [getToken, dispatch]);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -105,12 +169,18 @@ const Friends = () => {
                       </button>
                     }
                     {currTab === "Following" && (
-                      <button className="w-full p-2 text-sm rounded- bg-slate-100 hover:bg-slate-200 text-black active:scale-95 transition cursor-pointer">
+                      <button
+                        onClick={() => handleUnfollow(user._id)}
+                        className="w-full p-2 text-sm rounded- bg-slate-100 hover:bg-slate-200 text-black active:scale-95 transition cursor-pointer"
+                      >
                         Unfollow
                       </button>
                     )}
                     {currTab === "Pending" && (
-                      <button className="w-full p-2 text-sm rounded- bg-slate-100 hover:bg-slate-200 text-black active:scale-95 transition cursor-pointer">
+                      <button
+                        onClick={() => acceptFriend(user._id)}
+                        className="w-full p-2 text-sm rounded- bg-slate-100 hover:bg-slate-200 text-black active:scale-95 transition cursor-pointer"
+                      >
                         Accept
                       </button>
                     )}

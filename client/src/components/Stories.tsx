@@ -1,18 +1,38 @@
 import { useEffect, useState } from "react";
-import { dummyStoriesData } from "../assets/assets";
 import { Plus } from "lucide-react";
 import type { StoryProps } from "../interfaces";
 import moment from "moment";
 import StoryCreator from "./StoryCreator";
 import StoryViewer from "./StoryViewer";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const Stories = () => {
+  const { getToken } = useAuth();
+
   const [stories, setStories] = useState<StoryProps[]>([]);
   const [showStoryCreator, setShowStoryCreator] = useState(false);
   const [currStory, setCurrStory] = useState<StoryProps | null>(null);
 
   const fetchStories = async () => {
-    setStories(dummyStoriesData);
+    try {
+      const token = await getToken();
+      const { data } = await api.get("/api/story/get", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (data.success) {
+        setStories(data.stories);
+      } else {
+        toast(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred.");
+      }
+    }
   };
 
   useEffect(() => {
