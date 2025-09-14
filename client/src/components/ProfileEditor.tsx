@@ -36,7 +36,11 @@ const ProfileEditor = ({
     year: user.year,
   });
 
-  const handleSaveProfile = async (e) => {
+  interface HandleSaveProfileEvent extends React.FormEvent<HTMLFormElement> {}
+
+  const handleSaveProfile = async (
+    e: HandleSaveProfileEvent
+  ): Promise<void> => {
     e.preventDefault();
     try {
       const userData = new FormData();
@@ -60,11 +64,11 @@ const ProfileEditor = ({
       if (profile_picture) userData.append("profile", profile_picture);
       if (cover_photo) userData.append("cover", cover_photo);
 
-      const token = (await getToken()) ?? "";
+      const token: string = (await getToken()) ?? "";
       dispatch(updateUser({ userData, token }));
 
       setShowEdit(false);
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
       } else {

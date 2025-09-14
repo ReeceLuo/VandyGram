@@ -1,18 +1,40 @@
 import { useEffect, useState } from "react";
-import { dummyPostsData, sponsoredLink } from "../assets/assets";
+import { sponsoredLink } from "../assets/assets";
 import Loading from "../components/Loading";
 import Stories from "../components/Stories";
 import PostCard from "../components/PostCard";
 import RecentActivity from "../components/RecentActivity";
 import Sponsored from "../components/Sponsored";
 import type { PostProps } from "../interfaces";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const Feed = () => {
+  const { getToken } = useAuth();
+
   const [feed, setFeed] = useState<PostProps[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchFeed = async () => {
-    setFeed(dummyPostsData);
+    try {
+      setLoading(true);
+      const { data } = await api.get("api/post/feed", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+
+      if (data.success) {
+        setFeed(data.posts);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
     setLoading(false); // Once data is fetched, loading is false
   };
 

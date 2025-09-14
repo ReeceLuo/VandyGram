@@ -1,6 +1,8 @@
+import { useAuth } from "@clerk/clerk-react";
 import { ArrowLeft, Sparkle, TextIcon, Upload } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import api from "../api/axios";
 
 interface StoryCreatorProps {
   setShowStoryCreator: (show: boolean) => void;
@@ -26,17 +28,90 @@ const StoryCreator = ({
   const [media, setMedia] = useState<File | null>(null);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
 
+  const { getToken } = useAuth();
+
+  const MAX_VIDEO_DURATION = 60; // seconds
+  const MAX_VIDEO_SIZE_MB = 50; // megabytes
+
   const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const file = files && files[0];
     if (file) {
-      setMedia(file);
-      setPreviewURL(URL.createObjectURL(file));
+      if (file.type.startsWith("video")) {
+        if (file.size > MAX_VIDEO_SIZE_MB * 1024 * 1024) {
+          toast.error(`Video size cannot exceed ${MAX_VIDEO_SIZE_MB} MB.`);
+          setMedia(null);
+          setPreviewURL(null);
+          return;
+        }
+        const video = document.createElement("video");
+        video.preload = "metadata";
+        video.onloadedmetadata = () => {
+          window.URL.revokeObjectURL(video.src);
+          if (video.duration > MAX_VIDEO_DURATION) {
+            toast.error(
+              `Video duration cannot exceed ${MAX_VIDEO_DURATION} seconds.`
+            );
+            setMedia(null);
+            setPreviewURL(null);
+          } else {
+            setMedia(file);
+            setPreviewURL(URL.createObjectURL(file));
+            setText("");
+            setMode("media");
+          }
+        };
+        video.src = URL.createObjectURL(file);
+      } else if (file.type.startsWith("image")) {
+        setMedia(file);
+        setPreviewURL(URL.createObjectURL(file));
+        setText("");
+        setMode("media");
+      }
     }
   };
 
   // Connects to backend to post story
-  const handleCreateStory = () => {};
+  const handleCreateStory = async () => {
+    const media_type =
+      mode === "media"
+        ? media?.type.startsWith("image")
+          ? "image"
+          : "video"
+        : "text";
+    if (media_type === "text" && !text) {
+      throw new Error("Please enter some text.");
+    }
+
+    let formData = new FormData();
+    formData.append("content", text);
+    formData.append("media_type", media_type);
+    if (media) {
+      formData.append("media", media);
+    }
+    formData.append("background_color", background);
+
+    const token = await getToken();
+    try {
+      const { data } = await api.post("/api/story/create", formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (data.success) {
+        setShowStoryCreator(false);
+        toast.success("Story created successfully!");
+        fetchStories();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred.");
+      }
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-110 min-h-screen bg-black/80 backdrop-blur text-white flex items-center justify-center p-4">
@@ -106,10 +181,7 @@ const StoryCreator = ({
             }`}
           >
             <input
-              onChange={(e) => {
-                handleMediaUpload(e);
-                setMode("media");
-              }}
+              onChange={handleMediaUpload}
               type="file"
               accept="image/*, video/*"
               className="hidden"
@@ -121,8 +193,6 @@ const StoryCreator = ({
           onClick={() =>
             toast.promise(handleCreateStory(), {
               loading: "Saving",
-              success: <p>Story posted</p>,
-              error: (e) => <p>{e.message}</p>,
             })
           }
           className="flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 active:scale-95 transition cursor-pointer"

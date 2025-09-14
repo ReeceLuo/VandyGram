@@ -1,9 +1,11 @@
 import { BadgeCheck, Heart, MessageCircle } from "lucide-react";
 import moment from "moment";
 import { useState } from "react";
-import { dummyUserData } from "../assets/assets";
 import type { PostProps } from "../interfaces";
 import { useSelector } from "react-redux";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const PostCard = ({ post }: { post: PostProps }) => {
   // Edits post with hashtags
@@ -13,9 +15,39 @@ const PostCard = ({ post }: { post: PostProps }) => {
   );
 
   const [numLikes, setNumLikes] = useState(post.likes_count);
-  const currUser = useSelector((state: any) => state.user.value);
+  const currentUser = useSelector((state: any) => state.user.value);
 
-  const handleLike = async () => {};
+  const { getToken } = useAuth();
+
+  const handleLike = async () => {
+    try {
+      const { data } = await api.post(
+        "api/post/like",
+        { postId: post._id },
+        { headers: { Authorization: `Bearer ${await getToken()}` } }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        setNumLikes((prev) => {
+          if (prev.includes(currentUser._id)) {
+            return prev.filter((id) => id !== currentUser._id);
+          } else {
+            return [...prev, currentUser._id];
+          }
+        });
+      } else {
+        toast(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
+  };
+
   return (
     <div className="bg-white rounded-x1 shadow p-4 space-y-4 w-full max-w-2xl">
       {/* User info */}
@@ -61,7 +93,7 @@ const PostCard = ({ post }: { post: PostProps }) => {
           <Heart
             onClick={handleLike}
             className={`w-4 h-4 cursor-pointer ${
-              numLikes.includes(currUser._id) && `text-red-500 fill-red-500`
+              numLikes.includes(currentUser._id) && `text-red-500 fill-red-500`
             }`}
           />
           <span>{numLikes.length}</span>
