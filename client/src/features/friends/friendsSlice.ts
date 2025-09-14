@@ -9,7 +9,7 @@ const initialState = {
   following: [],
 };
 
-export const fetchFriends = createAsyncThunk("friends/fetchFriends", async (token) => {
+export const fetchFriends = createAsyncThunk<any, string | null>("friends/fetchFriends", async (token) => {
   const {data} = await api.get('api/user/friends', {
     headers: {
       Authorization: `Bearer ${token}`,

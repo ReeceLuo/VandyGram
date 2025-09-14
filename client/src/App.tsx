@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Layout from "./pages/Layout";
@@ -23,8 +23,8 @@ const App = () => {
     const fetchData = async () => {
       if (user) {
         const token = await getToken();
-        console.log(token)
-        dispatch(fetchUser(token));
+        console.log(token);
+        dispatch(fetchUser(token ?? undefined));
         dispatch(fetchFriends(token));
       }
     };
