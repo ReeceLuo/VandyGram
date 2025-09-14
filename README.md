@@ -19,15 +19,15 @@ Media Storage: ImageKit
 Workflows / Background Jobs: Inngest
 
 ## ✨ Features  
-- **Personalize your page** - Add your bio, major, year in school, and residential area to your profile!
+- **Personalize your page** - Add your **bio**, **major**, **year** in school, and **residential area** to your profile!
   
-- **Discover other Commodores** - Search for other students by name, residential area, or major in the **Discover** page!
+- **Discover other Commodores** - **Search** for other students by name, residential area, or major in the **Discover** page!
 
-- **Follow System** - Follow or unfollow other users to personalize your feed  
+- **Follow System** - Follow or unfollow other users to **personalize** your feed  
 
-- **Stories** - Post temporary stories visible for only **24 hours** before disappearing!
+- **Stories** - Post temporary **stories** visible for only **24 hours** before disappearing!
 
-- **Notifications** - Receive email notifications when you get a friend request!  
+- **Notifications** - Receive **email notifications** when you get a friend request!  
 
 
 ## Viewing the program:
