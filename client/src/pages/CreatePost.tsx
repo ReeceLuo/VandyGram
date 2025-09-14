@@ -31,7 +31,7 @@ const CreatePost = () => {
     try {
       const formData = new FormData();
       formData.append("content", content);
-      formData.append("postType", postType);
+      formData.append("post_type", postType);
       images.forEach((image) => formData.append("images", image));
 
       const { data } = await api.post("/api/post/add", formData, {
