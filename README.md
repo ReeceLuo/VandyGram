@@ -5,6 +5,8 @@
 
 **Email:** reece.w.luo@vanderbilt.edu
 
+<img width="961" height="260" alt="logo1" src="https://github.com/user-attachments/assets/3cdfd606-e6f5-4259-bf91-a460ce34b7aa" />
+
 ## About this project:
 This project is built on the MERN stack (MongoDB, Express.js, React.js, and Node.js). At first, the project felt daunting because of the number of moving parts across the frontend and backend like React components, database management, middleware, and server-side logic, but as I learned about the different technologies, I became more confident in connecting each piece into a cohesive, robust system. I reinforced my understanding of how APIs enable communication between different layers of an application, learned to define schemas for data storage, and gained a stronger grasp of state management in React. I also practiced valuable debugging techniques, especially when using TypeScript to nail down the frontend and authentication for api calls. Overall, this project was a rewarding experience that strengthened both my technical breadth and architectural skills.
 
@@ -59,28 +61,23 @@ Hosted on Vercel! Click the link and make an account to join the platform. Feel 
    ```
    // Deployment
    FRONTEND_URL=
-
-   //MongoDB
+   // MongoDB
    MONGODB_URL=
-
   // Inngest events
   INNGEST_EVENT_KEY=
   INNGEST_SIGNING_KEY=
-
   // Clerk auth
   CLERK_PUBLISHABLE_KEY=
   CLERK_SECRET_KEY=
-  
   // Imagekit storage
   IMAGEKIT_PUBLIC_KEY=
   IMAGEKIT_PRIVATE_KEY=
   IMAGEKIT_URL_ENDPOINT=
-
   // SMTP (for nodemailer)
   SENDER_EMAIL=
   SMTP_USER=
   SMTP_PASSWORD=
-   ```
+
 5. **Run client and server**
    ```
    // cd into client
