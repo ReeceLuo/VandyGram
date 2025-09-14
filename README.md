@@ -11,12 +11,12 @@
 This project is built on the MERN stack (MongoDB, Express.js, React.js, and Node.js). At first, the project felt daunting because of the number of moving parts across the frontend and backend like React components, database management, middleware, and server-side logic, but as I learned about the different technologies, I became more confident in connecting each piece into a cohesive, robust system. I reinforced my understanding of how APIs enable communication between different layers of an application, learned to define schemas for data storage, and gained a stronger grasp of state management in React. I also practiced valuable debugging techniques, especially when using TypeScript to nail down the frontend and authentication for api calls. Overall, this project was a rewarding experience that strengthened both my technical breadth and architectural skills.
 
 ## 🛠️ Tech Stack
-Frontend: React.js + Vite
-Backend: Node.js + Express.js
-Database: MongoDB
-Authentication: Clerk
-Media Storage: ImageKit
-Workflows / Background Jobs: Inngest
+- Frontend: React.js + Vite
+- Backend: Node.js + Express.js
+- Database: MongoDB
+- Authentication: Clerk
+- Media Storage: ImageKit
+- Workflows / Background Jobs: Inngest
 
 ## ✨ Features  
 - **Personalize your page** - Add your **bio**, **major**, **year** in school, and **residential area** to your profile!
