@@ -1,31 +1,61 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { dummyPostsData, dummyUserData } from "../assets/assets";
 import Loading from "../components/Loading";
 import UserProfileInfo from "../components/UserProfileInfo";
 import PostCard from "../components/PostCard";
 import moment from "moment";
 import ProfileEditor from "../components/ProfileEditor";
 import type { UserProps, PostProps } from "../interfaces";
+import { useAuth } from "@clerk/clerk-react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const currentUser = useSelector((state: any) => state.user.value);
+
   // useParams() - React router hook that lets you read dynamic URL parameters
   const { profileId } = useParams(); // gets profileId from .../profile/profileId
   // if !profileId (there is no profileId), the user is on their own profile page
 
+  const { getToken } = useAuth();
   const [user, setUser] = useState<UserProps | null>(null);
   const [posts, setPosts] = useState<PostProps[]>([]);
   const [activeTab, setActiveTab] = useState("posts"); // state for tab currently being displayed
   const [showEdit, setShowEdit] = useState(false);
 
-  const fetchUser = async () => {
-    setUser(dummyUserData);
-    setPosts(dummyPostsData);
+  const fetchUser = async (profileId: string) => {
+    const token = await getToken();
+    try {
+      const { data } = await api.post(
+        `/api/user/profiles`,
+        { profileId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (data.success) {
+        setUser(data.profile);
+        setPosts(data.posts);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    }
   };
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    if (profileId) {
+      fetchUser(profileId);
+    } else {
+      fetchUser(currentUser._id);
+    }
+  }, [profileId, currentUser]);
 
   return user ? (
     <div className="relative h-full overflow-y-scroll bg-gray-50 p-6">

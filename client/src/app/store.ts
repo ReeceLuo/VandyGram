@@ -4,7 +4,8 @@ import friendsReducer from "../features/friends/friendsSlice.ts";
 
 export const store = configureStore({
   reducer: {
-    user: userRed
+    user: userReducer,
+    friends: friendsReducer,
   },
 });
 

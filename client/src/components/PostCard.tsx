@@ -3,6 +3,7 @@ import moment from "moment";
 import { useState } from "react";
 import { dummyUserData } from "../assets/assets";
 import type { PostProps } from "../interfaces";
+import { useSelector } from "react-redux";
 
 const PostCard = ({ post }: { post: PostProps }) => {
   // Edits post with hashtags
@@ -12,7 +13,7 @@ const PostCard = ({ post }: { post: PostProps }) => {
   );
 
   const [numLikes, setNumLikes] = useState(post.likes_count);
-  const currUser = dummyUserData;
+  const currUser = useSelector((state: any) => state.user.value);
 
   const handleLike = async () => {};
   return (

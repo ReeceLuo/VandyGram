@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"; // hook to navigate progra
 import Menu from "./Menu";
 import { CirclePlus, LogOut } from "lucide-react";
 import { UserButton, useClerk } from "@clerk/clerk-react"; // UserButton provided by Clerk
+import { useSelector } from "react-redux";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -12,7 +13,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const navigate = useNavigate();
-  const user = dummyUserData;
+  const user = useSelector((state: any) => state.user.value);
   const { signOut } = useClerk();
 
   const handleSignOut = async () => {
