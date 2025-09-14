@@ -16,6 +16,7 @@ This project is built on the MERN stack (MongoDB, Express.js, React.js, and Node
 - Database: MongoDB
 - Authentication: Clerk
 - Media Storage: ImageKit
+- Email notifications: Nodemailer + Brevo
 - Workflows / Background Jobs: Inngest
 
 ## ✨ Features  
