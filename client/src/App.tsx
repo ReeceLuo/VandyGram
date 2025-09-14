@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Layout from "./pages/Layout";
@@ -42,6 +42,7 @@ const App = () => {
           <Route path="friends" element={<Friends />} />
           <Route path="discover" element={<Discover />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="profile/:profileId" element={<Profile />} />
           <Route path="create-post" element={<CreatePost />} />
         </Route>
       </Routes>

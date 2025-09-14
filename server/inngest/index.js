@@ -27,11 +27,15 @@ const syncUserCreation = inngest.createFunction(
       existingUser = await User.findOne({ username });
     }
 
+    const full_name =
+      first_name === "null" || last_name === "null"
+        ? "New User"
+        : first_name + " " + last_name;
+
     const userData = {
       _id: id,
       email: email_addresses[0].email_address,
-      // full_name: first_name + " " + last_name,
-      full_name: first_name + " " + last_name,
+      full_name: full_name,
       profile_picture: image_url,
       username,
     };
