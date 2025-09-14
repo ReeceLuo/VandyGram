@@ -63,21 +63,21 @@ Hosted on Vercel! Click the link and make an account to join the platform. Feel 
    FRONTEND_URL=
    // MongoDB
    MONGODB_URL=
-  // Inngest events
-  INNGEST_EVENT_KEY=
-  INNGEST_SIGNING_KEY=
-  // Clerk auth
-  CLERK_PUBLISHABLE_KEY=
-  CLERK_SECRET_KEY=
-  // Imagekit storage
-  IMAGEKIT_PUBLIC_KEY=
-  IMAGEKIT_PRIVATE_KEY=
-  IMAGEKIT_URL_ENDPOINT=
-  // SMTP (for nodemailer)
-  SENDER_EMAIL=
-  SMTP_USER=
-  SMTP_PASSWORD=
-
+   // Inngest events
+   INNGEST_EVENT_KEY=
+   INNGEST_SIGNING_KEY=
+   // Clerk auth
+   CLERK_PUBLISHABLE_KEY=
+   CLERK_SECRET_KEY=
+   // Imagekit storage
+   IMAGEKIT_PUBLIC_KEY=
+   IMAGEKIT_PRIVATE_KEY=
+   IMAGEKIT_URL_ENDPOINT=
+   // SMTP (for nodemailer)
+   SENDER_EMAIL=
+   SMTP_USER=
+   SMTP_PASSWORD=
+   ```
 5. **Run client and server**
    ```
    // cd into client
