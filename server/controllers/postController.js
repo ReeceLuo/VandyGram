@@ -91,3 +91,74 @@ export const likePost = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+// Leave comment
+export const leaveComment = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const { postId, content } = req.body;
+
+    // Validate input
+    if (!content || content.trim() === "") {
+      return res.json({
+        success: false,
+        message: "Comment content is required.",
+      });
+    }
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.json({ success: false, message: "Post not found." });
+    }
+
+    // Create new comment object
+    const newComment = {
+      user: userId,
+      content: content.trim(),
+      createdAt: new Date(),
+    };
+
+    // Add comment to post
+    post.comments.push(newComment);
+    await post.save();
+
+    // Return the post with populated comments
+    const updatedPost = await Post.findById(postId)
+      .populate("user")
+      .populate("comments.user");
+
+    res.json({
+      success: true,
+      message: "Comment added successfully.",
+      post: updatedPost,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// Get comments for a post
+export const getComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await Post.findById(postId).populate(
+      "comments.user",
+      "username profile_picture"
+    );
+
+    if (!post) {
+      return res.json({ success: false, message: "Post not found." });
+    }
+
+    res.json({
+      success: true,
+      comments: post.comments,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
