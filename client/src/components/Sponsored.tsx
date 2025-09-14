@@ -1,4 +1,3 @@
-import React from "react";
 import { assets } from "../assets/assets";
 
 const Sponsored = ({ sponsoredLink }: { sponsoredLink: string }) => {

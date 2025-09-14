@@ -1,11 +1,4 @@
-import {
-  BookText,
-  Calendar,
-  GraduationCap,
-  House,
-  PenBox,
-  Verified,
-} from "lucide-react";
+import { BookText, Calendar, House, PenBox, Verified } from "lucide-react";
 import React from "react";
 import type { PostProps, UserProps } from "../interfaces";
 import moment from "moment";

@@ -20,7 +20,9 @@ const PostCard = ({ post }: { post: PostProps }) => {
 
   const [numLikes, setNumLikes] = useState(post.likes_count);
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState([
+  // const [comments, setComments] = useState([]);
+
+  const comments = [
     {
       id: 1,
       user: {
@@ -39,8 +41,7 @@ const PostCard = ({ post }: { post: PostProps }) => {
       content: "Great post! Thanks for sharing.",
       createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
     },
-  ]);
-
+  ];
   // const fetchComments = async () => {
   //   try {
   //     const { data } = await api.get(`api/post/${post._id}/comments`, {
