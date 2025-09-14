@@ -1,7 +1,6 @@
 import express from "express";
 import {
   addPost,
-  getComments,
   getFeedPosts,
   leaveComment,
   likePost,
@@ -14,6 +13,5 @@ postRouter.post("/add", upload.array("images", 4), protect, addPost); // Add up 
 postRouter.get("/feed", protect, getFeedPosts);
 postRouter.post("/like", protect, likePost);
 postRouter.post("/comment", protect, leaveComment);
-postRouter.get("/comments", protect, getComments);
 
 export default postRouter;

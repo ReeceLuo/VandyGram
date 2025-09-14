@@ -54,10 +54,15 @@ export const getFeedPosts = async (req, res) => {
     const { userId } = req.auth();
     const user = await User.findById(userId);
 
-    // Getes post of user, friends, and following
+    // Gets post of user, friends, and following
     const userIds = [userId, ...user.friends, ...user.following];
     const posts = await Post.find({ user: { $in: userIds } })
       .populate("user")
+      .populate({
+        path: "comments.user",
+        select: "full_name username profile_picture",
+        model: "User"
+      })
       .sort({ createdAt: -1 });
 
     res.json({ success: true, posts });
@@ -115,6 +120,7 @@ export const leaveComment = async (req, res) => {
     // Create new comment object
     const newComment = {
       user: userId,
+      // profile_picture: user.profile_picture,
       content: content.trim(),
       createdAt: new Date(),
     };
@@ -126,36 +132,16 @@ export const leaveComment = async (req, res) => {
     // Return the post with populated comments
     const updatedPost = await Post.findById(postId)
       .populate("user")
-      .populate("comments.user");
+      .populate({
+        path: "comments.user",
+        select: "full_name username profile_picture",
+        model: "User"
+      });
 
     res.json({
       success: true,
       message: "Comment added successfully.",
       post: updatedPost,
-    });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
-  }
-};
-
-// Get comments for a post
-export const getComments = async (req, res) => {
-  try {
-    const { postId } = req.params;
-
-    const post = await Post.findById(postId).populate(
-      "comments.user",
-      "username profile_picture"
-    );
-
-    if (!post) {
-      return res.json({ success: false, message: "Post not found." });
-    }
-
-    res.json({
-      success: true,
-      comments: post.comments,
     });
   } catch (error) {
     console.log(error);
