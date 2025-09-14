@@ -32,7 +32,10 @@ This project is built on the MERN stack (MongoDB, Express.js, React.js, and Node
 
 
 ## Viewing the program:
-Hosted on [Vercel](https://vandy-gram-deployment.vercel.app/)! Click the link and make an account to join the platform. Feel free to contact me if there are any issues with accessing the app!
+Hosted on [Vercel](https://vandy-gram-deployment.vercel.app/)! **Sign in with the guest account below to view content with already connected users.** Feel free to contact me if there are any issues with accessing the app!
+
+**Email:** vandygram25@gmail.com
+**Password:** vandygramuser
 
 
 ## 🚀 To run locally
