@@ -23,6 +23,7 @@ const App = () => {
     const fetchData = async () => {
       if (user) {
         const token = await getToken();
+        console.log(token)
         dispatch(fetchUser(token));
         dispatch(fetchFriends(token));
       }
