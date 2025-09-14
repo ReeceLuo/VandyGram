@@ -1,3 +1,15 @@
+export interface CommentProps {
+  user: {
+    _id: string;
+    full_name: string;
+    username: string;
+    profile_picture: string;
+  };
+  content: string;
+  createdAt: string;
+  _id: string;
+}
+
 export interface PostProps {
   _id: string;
   user: UserProps;
@@ -5,6 +17,7 @@ export interface PostProps {
   image_urls: string[];
   post_type: string;
   likes_count: string[];
+  comments: CommentProps[];
   createdAt: string;
   updatedAt: string;
 }

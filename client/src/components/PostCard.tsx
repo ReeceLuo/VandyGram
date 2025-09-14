@@ -7,11 +7,7 @@ import { useAuth } from "@clerk/clerk-react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 
-import { dummyUserData } from "../assets/assets";
-
 const PostCard = ({ post }: { post: PostProps }) => {
-  const user = dummyUserData;
-
   // Edits post with hashtags
   const postWithHashtags = post.content.replace(
     /(#\w+)/g,
@@ -20,51 +16,58 @@ const PostCard = ({ post }: { post: PostProps }) => {
 
   const [numLikes, setNumLikes] = useState(post.likes_count);
   const [showComments, setShowComments] = useState(false);
-  // const [comments, setComments] = useState([]);
-
-  const comments = [
-    {
-      id: 1,
-      user: {
-        username: "John Doe",
-        profile_picture: user.profile_picture,
-      },
-      content: "This is a sample comment!",
-      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-    },
-    {
-      id: 2,
-      user: {
-        username: "Jane Smith",
-        profile_picture: user.profile_picture,
-      },
-      content: "Great post! Thanks for sharing.",
-      createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
-    },
-  ];
-  // const fetchComments = async () => {
-  //   try {
-  //     const { data } = await api.get(`api/post/${post._id}/comments`, {
-  //       headers: { Authorization: `Bearer ${await getToken()}` },
-  //     });
-
-  //     if (data.success) {
-  //       setComments(data.comments);
-  //     } else {
-  //       toast.error(data.message);
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       toast.error(error.message);
-  //     } else {
-  //       toast.error("An unknown error occurred");
-  //     }
-  //   }
-  // };
-
+  const [postComments, setPostComments] = useState(post.comments || []);
   const currentUser = useSelector((state: any) => state.user.value);
-
   const { getToken } = useAuth();
+
+  const [comment, setComment] = useState("");
+  
+  const handleComment = async () => {
+    if (!comment.trim()) {
+      toast.error("Please enter a comment");
+      return;
+    }
+    
+    try {
+      const { data } = await api.post(
+        "api/post/comment",
+        { postId: post._id, content: comment.trim() },
+        {
+          headers: { Authorization: `Bearer ${await getToken()}` },
+        }
+      );
+      
+      if (data.success) {
+        toast.success("Comment added successfully!");
+        
+        // Add the new comment to local state immediately
+        const newComment = {
+          user: {
+            _id: currentUser._id,
+            full_name: currentUser.full_name,
+            username: currentUser.username,
+            profile_picture: currentUser.profile_picture
+          },
+          content: comment.trim(),
+          createdAt: new Date().toISOString(),
+          _id: `temp_${Date.now()}` // Temporary ID until we get the real one
+        };
+        
+        setPostComments(prev => [...prev, newComment]);
+        setComment(""); // Clear the input
+      } else {
+        toast.error(data.message || "Failed to add comment");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
+    }
+  };
+
+
 
   const handleLike = async () => {
     try {
@@ -150,7 +153,7 @@ const PostCard = ({ post }: { post: PostProps }) => {
           onClick={() => setShowComments(!showComments)}
         >
           <MessageCircle className="w-4 h-4" />
-          <span>{comments.length} Comments</span>
+          <span>{postComments.length} {postComments.length === 1 ? "Comment" : "Comments"}</span>
         </button>
 
         {showComments && (
@@ -158,20 +161,20 @@ const PostCard = ({ post }: { post: PostProps }) => {
             <div className="p-4 space-y-3">
               {/* Comments List */}
               <div className="space-y-2">
-                {comments.map((comment) => (
+                {postComments && postComments.length > 0 && postComments.map((comment) => (
                   <div
-                    key={comment.id}
+                    key={comment._id}
                     className="bg-gray-50 p-3 rounded-lg flex gap-3"
                   >
                     <img
-                      src={comment.user.profile_picture}
+                      src={comment.user?.profile_picture || "/default-avatar.png"}
                       alt=""
                       className="w-10 h-10 mt-0.5 rounded-full flex-shrink-0"
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-semibold text-sm">
-                          {comment.user.username}
+                          {comment.user?.username || "Unknown User"}
                         </span>
                         <span className="text-xs text-gray-500">
                           {moment(comment.createdAt).fromNow()}
@@ -184,12 +187,22 @@ const PostCard = ({ post }: { post: PostProps }) => {
               </div>
 
               {/* Comment Input */}
-              <div>
+              <div className="flex gap-2">
                 <input
                   type="text"
-                  className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleComment()}
+                  className="flex-1 p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   placeholder="Leave a comment..."
                 />
+                <button
+                  onClick={handleComment}
+                  disabled={!comment.trim()}
+                  className="px-4 py-2 text-white rounded-lg bg-gradient-to-r from-amber-300 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                >
+                  Post
+                </button>
               </div>
             </div>
           </div>

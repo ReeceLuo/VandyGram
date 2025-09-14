@@ -36,9 +36,10 @@ const RecentActivity = () => {
     <div className="bg-white max-w-xs mt-4 p-4 min-h-20 rounded-md shadow text-xs text-slate-800">
       <h3 className="font-semibold text-slate-8 mb-4">Recent Activity</h3>
       <div className="flex flex-col max-h-56 overflow-y-scroll no-scrollbar"></div>
-      {activity.map((action: RecentActivityProps) => (
+      {activity.map((action: RecentActivityProps, index: number) => (
         <div
           onClick={() => setSeen(true)}
+          key={index}
           className="flex items-start gap-2 py-2 hover:bg-slate-100"
         >
           <img
